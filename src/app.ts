@@ -1,18 +1,35 @@
 import express,{Application, Request, Response, NextFunction} from 'express';
 
 const app:Application = express();
-const PORT = 3001;
+const PORT =  process.env.PORT || 3001;
 
-app.use("/",(req: Request, res: Response):  void=>{
-    res.send("Online App");
-})
+app.use(express.json())
 
-app.post("/demo1",(req:Request, res: Response,  next: NextFunction ):void =>{
+
+app.get("/",(req: Request,res:Response): void => {
+res.send("Hi, It's online.")
+
+});
+app.post("/demo1",(req:Request<PayloadMotor>, res: Response, next: NextFunction):void =>{
     try {
-        var userAgent = req.headers['contexto']; 
-    } catch (error ) {
+        const {body} = req;
+        const contexto: undefined | string = req.headers['contexto']?.toString(); 
+
+
+
+        if(!contexto){
+            throw new Error("Header contexto invalido");
+        }
+
+        console.log(body);
+        res.send("OK")
+    } catch (error: Error | any ) {
         console.log("Error: "  ,error)
-        next(error) 
+       //next(error)
+       res.status(500).json({
+        status:500,
+        message:error.message
+    })
     }
 })
 
