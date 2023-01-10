@@ -19,7 +19,7 @@ app.post("/demo1", (req, res, next) => {
             throw new Error("Header contexto invalido");
         }
         console.log(body);
-        res.send("OK");
+        res.send(body);
     }
     catch (error) {
         console.log("Error: ", error);

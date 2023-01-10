@@ -14,15 +14,12 @@ app.post("/demo1",(req:Request<PayloadMotor>, res: Response, next: NextFunction)
     try {
         const {body} = req;
         const contexto: undefined | string = req.headers['contexto']?.toString(); 
-
-
-
         if(!contexto){
             throw new Error("Header contexto invalido");
         }
 
         console.log(body);
-        res.send("OK")
+        res.send(body)
     } catch (error: Error | any ) {
         console.log("Error: "  ,error)
        //next(error)
